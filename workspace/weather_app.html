@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f1d 0%, #1e293b 100%);
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 360px;
+            text-align: center;
+        }
+        h2 { color: #00e5ff; margin-bottom: 20px; }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            background: linear-gradient(135deg, #00e5ff, #9d4edd);
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #result { margin-top: 16px; font-size: 1.1rem; color: #00f59b; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Weather App</h2>
+        <input type="number" id="num1" placeholder="Enter first number">
+        <input type="number" id="num2" placeholder="Enter second number">
+        <button onclick="calculate()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const a = parseFloat(document.getElementById('num1').value) || 0;
+            const b = parseFloat(document.getElementById('num2').value) || 0;
+            document.getElementById('result').innerText = `Result: ${a + b}`;
+        }
+    </script>
+</body>
+</html>
