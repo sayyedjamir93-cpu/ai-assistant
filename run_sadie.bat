@@ -16,6 +16,9 @@ start "SADIE Frontend (Port 5173)" cmd /k "cd /d %~dp0frontend && npm run dev --
 echo.
 echo [OK] Both Backend and Frontend services launched!
 echo - Backend API: http://127.0.0.1:8000/docs
-echo - Frontend UI: http://localhost:5173/
+echo - Laptop UI:    http://localhost:5173/
+echo - Phone Access: http://192.168.0.103:5173/ (or your Wi-Fi IP:5173)
+echo.
+echo [TIP] Connect your phone to the same Wi-Fi and open the Phone Access URL!
 echo.
 pause

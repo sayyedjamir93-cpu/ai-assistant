@@ -13,5 +13,6 @@ Start-Sleep -Seconds 2
 Start-Process powershell -ArgumentList "-NoExit", "-Command", "Set-Location '$PSScriptRoot\frontend'; npm run dev -- --host"
 
 Write-Host "`n[OK] Backend and Frontend running!" -ForegroundColor Green
-Write-Host "  -> Frontend UI: http://localhost:5173" -ForegroundColor Yellow
-Write-Host "  -> Backend API: http://127.0.0.1:8000/docs" -ForegroundColor Yellow
+Write-Host "  -> Laptop UI:    http://localhost:5173" -ForegroundColor Yellow
+Write-Host "  -> Phone Access: http://192.168.0.103:5173 (on same Wi-Fi)" -ForegroundColor Cyan
+Write-Host "  -> Backend API:  http://127.0.0.1:8000/docs" -ForegroundColor Gray
