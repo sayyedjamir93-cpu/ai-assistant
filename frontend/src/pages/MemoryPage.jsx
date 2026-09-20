@@ -59,14 +59,14 @@ export default function MemoryPage() {
   };
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
         <div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
             Controlled Personal Memory
           </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
             Review, manage, or delete facts that SADIE has been explicitly asked to remember.
           </p>
         </div>
@@ -83,24 +83,24 @@ export default function MemoryPage() {
         display: "flex",
         alignItems: "center",
         gap: "12px",
-        padding: "14px 18px",
+        padding: "14px 16px",
         borderRadius: "12px",
         background: "rgba(0, 229, 255, 0.08)",
         border: "1px solid rgba(0, 229, 255, 0.2)",
-        marginBottom: "24px",
-        fontSize: "0.88rem",
+        marginBottom: "20px",
+        fontSize: "0.85rem",
         color: "var(--text-secondary)"
       }}>
-        <Shield size={20} color="var(--accent-cyan)" />
+        <Shield size={20} color="var(--accent-cyan)" style={{ flexShrink: 0 }} />
         <span>
           <strong>Zero Secret Tracking:</strong> SADIE only retains information when you explicitly say <em>"Remember that..."</em> or add facts below. All memories are transparently editable.
         </span>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.6fr", gap: "24px" }}>
+      <div className="grid-stack-mobile cols-1-1-6">
         
         {/* Add Memory Fact */}
-        <div className="glass-panel" style={{ padding: "24px", height: "fit-content" }}>
+        <div className="glass-panel" style={{ padding: "20px", height: "fit-content" }}>
           <h3 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
             <Plus size={18} color="var(--accent-cyan)" /> Teach SADIE a Fact
           </h3>

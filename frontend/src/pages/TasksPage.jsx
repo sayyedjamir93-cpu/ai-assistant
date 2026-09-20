@@ -100,18 +100,18 @@ export default function TasksPage() {
   });
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
           Tasks & Scheduled Reminders
         </h2>
-        <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
           Organize assignments, track pending deadlines, and schedule alerts.
         </p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.3fr 0.7fr", gap: "24px" }}>
+      <div className="grid-stack-mobile cols-1-3-0-7">
         
         {/* Tasks Section */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -130,21 +130,21 @@ export default function TasksPage() {
                 placeholder="Task title (e.g. Finish Data Structures problem set)..."
                 className="input-glass"
               />
-              <div style={{ display: "flex", gap: "10px" }}>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <input
                   type="text"
                   value={newDescription}
                   onChange={(e) => setNewDescription(e.target.value)}
                   placeholder="Optional details / description"
                   className="input-glass"
-                  style={{ flex: 1 }}
+                  style={{ flex: "1 1 180px" }}
                 />
                 <input
                   type="datetime-local"
                   value={newDueDate}
                   onChange={(e) => setNewDueDate(e.target.value)}
                   className="input-glass"
-                  style={{ width: "220px", cursor: "pointer" }}
+                  style={{ flex: "1 1 180px", cursor: "pointer" }}
                 />
               </div>
               <button type="submit" className="btn-primary" style={{ padding: "10px", width: "100%" }}>

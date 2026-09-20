@@ -74,19 +74,19 @@ export default function CodingPage() {
   };
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
           Coding Mode & Technical Assistant
         </h2>
-        <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
           Debug runtime errors, unpack algorithms, review code snippets, and master programming concepts.
         </p>
       </div>
 
       {/* Mode Subtabs */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
+      <div className="mobile-scroll-tabs" style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
         {[
           { id: "diagnostic", label: "Error Diagnostics", icon: Bug },
           { id: "concept", label: "Concept Explainer", icon: BookOpen },
@@ -99,7 +99,7 @@ export default function CodingPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={isActive ? "btn-primary" : "btn-secondary"}
-              style={{ padding: "8px 18px", fontSize: "0.85rem" }}
+              style={{ padding: "8px 16px", fontSize: "0.82rem" }}
             >
               <Icon size={16} />
               {tab.label}
@@ -110,10 +110,10 @@ export default function CodingPage() {
 
       {/* 1. Error Diagnostics View */}
       {activeTab === "diagnostic" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "24px" }}>
+        <div className="grid-stack-mobile cols-1-2">
           {/* Diagnostic Form */}
-          <div className="glass-panel" style={{ padding: "24px" }}>
-            <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className="glass-panel" style={{ padding: "20px" }}>
+            <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
               <Bug size={18} color="var(--accent-rose)" /> Diagnose Error / Stack Trace
             </h3>
 
@@ -244,44 +244,44 @@ export default function CodingPage() {
 
       {/* 2. Concept Explainer View */}
       {activeTab === "concept" && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          <div className="glass-panel" style={{ padding: "24px" }}>
-            <form onSubmit={handleExplainConcept} style={{ display: "flex", gap: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <div className="glass-panel" style={{ padding: "20px" }}>
+            <form onSubmit={handleExplainConcept} style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
               <input
                 type="text"
                 value={conceptQuery}
                 onChange={(e) => setConceptQuery(e.target.value)}
-                placeholder="Enter concept (e.g., Recursion, Pointers, Binary Trees, Async/Await)..."
+                placeholder="Enter concept (e.g., Recursion, Pointers, Binary Trees)..."
                 className="input-glass"
-                style={{ flex: 1 }}
+                style={{ flex: 1, minWidth: "200px" }}
               />
               <select
                 value={conceptLang}
                 onChange={(e) => setConceptLang(e.target.value)}
                 className="input-glass"
-                style={{ width: "160px", cursor: "pointer" }}
+                style={{ width: "130px", cursor: "pointer" }}
               >
                 <option value="python">Python</option>
                 <option value="cpp">C++</option>
                 <option value="javascript">JavaScript</option>
                 <option value="c">C</option>
               </select>
-              <button type="submit" disabled={conceptLoading} className="btn-primary" style={{ padding: "0 24px" }}>
-                {conceptLoading ? "Explaining..." : "Explain Concept"}
+              <button type="submit" disabled={conceptLoading} className="btn-primary" style={{ padding: "10px 20px" }}>
+                {conceptLoading ? "Explaining..." : "Explain"}
               </button>
             </form>
           </div>
 
           {conceptResult && (
-            <div className="glass-panel" style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "20px" }}>
-              <h3 style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--accent-cyan)" }}>
+            <div className="glass-panel" style={{ padding: "24px 16px", display: "flex", flexDirection: "column", gap: "18px" }}>
+              <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--accent-cyan)" }}>
                 {conceptResult.summary}
               </h3>
-              <div style={{ fontSize: "0.95rem", lineHeight: "1.7", color: "var(--text-primary)", whiteSpace: "pre-wrap" }}>
+              <div style={{ fontSize: "0.92rem", lineHeight: "1.7", color: "var(--text-primary)", whiteSpace: "pre-wrap" }}>
                 {conceptResult.explanation}
               </div>
               <div>
-                <h4 style={{ fontSize: "1rem", color: "var(--accent-emerald)", marginBottom: "8px" }}>Worked Code Example:</h4>
+                <h4 style={{ fontSize: "0.95rem", color: "var(--accent-emerald)", marginBottom: "8px" }}>Worked Code Example:</h4>
                 <pre className="code-container">
                   <code>{conceptResult.example_code}</code>
                 </pre>
@@ -293,8 +293,8 @@ export default function CodingPage() {
 
       {/* 3. Code Reviewer View */}
       {activeTab === "review" && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
-          <div className="glass-panel" style={{ padding: "24px" }}>
+        <div className="grid-stack-mobile cols-2">
+          <div className="glass-panel" style={{ padding: "20px" }}>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "14px" }}>Paste Code to Review</h3>
             <textarea
               rows={12}

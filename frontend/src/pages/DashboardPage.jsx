@@ -203,15 +203,15 @@ export default function DashboardPage({ activeMode, setActiveMode, setActiveTab,
   ];
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       
       {/* Top Hero Section */}
       <div className="glass-panel" style={{
-        padding: "40px 32px",
+        padding: "32px 16px",
         textAlign: "center",
         position: "relative",
         overflow: "hidden",
-        marginBottom: "28px"
+        marginBottom: "24px"
       }}>
         {/* Subtle Ambient Glow */}
         <div style={{
@@ -227,14 +227,14 @@ export default function DashboardPage({ activeMode, setActiveMode, setActiveTab,
 
         <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "6px 14px", borderRadius: "20px", background: "rgba(0, 229, 255, 0.1)", border: "1px solid rgba(0, 229, 255, 0.25)", marginBottom: "16px" }}>
           <Sparkles size={14} color="var(--accent-cyan)" />
-          <span style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--accent-cyan)" }}>
+          <span style={{ fontSize: "0.76rem", fontWeight: 600, color: "var(--accent-cyan)" }}>
             VOICE-ENABLED DESKTOP INTELLIGENCE
           </span>
         </div>
 
         <h2 style={{
           fontFamily: "var(--font-display)",
-          fontSize: "2.4rem",
+          fontSize: "clamp(1.4rem, 4.5vw, 2.3rem)",
           fontWeight: 800,
           letterSpacing: "-0.5px",
           marginBottom: "8px"
@@ -581,7 +581,7 @@ export default function DashboardPage({ activeMode, setActiveMode, setActiveTab,
         {incomingNotifications.length > 0 ? (
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
             gap: "12px",
             marginTop: "12px"
           }}>
@@ -669,9 +669,9 @@ export default function DashboardPage({ activeMode, setActiveMode, setActiveTab,
       {/* Metrics & Quick Status Ribbon */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-        gap: "18px",
-        marginBottom: "28px"
+        gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+        gap: "12px",
+        marginBottom: "24px"
       }}>
         <div className="glass-card" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>

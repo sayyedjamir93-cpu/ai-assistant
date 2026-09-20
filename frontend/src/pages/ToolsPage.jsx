@@ -181,20 +181,20 @@ export default function ToolsPage() {
   ];
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
           Desktop Tools & System Diagnostics
         </h2>
-        <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
           Sandboxed launcher for allowlisted applications, folder navigation, web search, and hardware telemetry.
         </p>
       </div>
 
       {actionFeedback && (
         <div style={{
-          padding: "12px 18px",
+          padding: "12px 16px",
           borderRadius: "10px",
           background: actionFeedback.success ? "rgba(0, 245, 155, 0.15)" : "rgba(255, 42, 109, 0.15)",
           border: `1px solid ${actionFeedback.success ? "rgba(0, 245, 155, 0.3)" : "rgba(255, 42, 109, 0.3)"}`,
@@ -213,9 +213,9 @@ export default function ToolsPage() {
       {sysInfo && (
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: "18px",
-          marginBottom: "28px"
+          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+          gap: "12px",
+          marginBottom: "24px"
         }}>
           <div className="glass-card" style={{ padding: "20px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
@@ -272,14 +272,14 @@ export default function ToolsPage() {
       )}
 
       {/* Applications & Folders Launchers */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "28px" }}>
+      <div className="grid-stack-mobile cols-2" style={{ marginBottom: "24px" }}>
         
         {/* Approved Apps */}
-        <div className="glass-panel" style={{ padding: "24px" }}>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "16px" }}>
+        <div className="glass-panel" style={{ padding: "20px" }}>
+          <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "16px" }}>
             Approved Applications
           </h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
             {apps.map((a, i) => {
               const Icon = a.icon;
               return (
@@ -288,7 +288,7 @@ export default function ToolsPage() {
                   onClick={() => handleLaunchApp(a.executable)}
                   className="glass-card"
                   style={{
-                    padding: "16px",
+                    padding: "14px",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
@@ -297,9 +297,9 @@ export default function ToolsPage() {
                     border: "1px solid rgba(255, 255, 255, 0.08)"
                   }}
                 >
-                  <Icon size={24} color="var(--accent-cyan)" style={{ marginBottom: "8px" }} />
-                  <div style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--text-primary)" }}>{a.name}</div>
-                  <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "2px" }}>{a.desc}</div>
+                  <Icon size={22} color="var(--accent-cyan)" style={{ marginBottom: "8px" }} />
+                  <div style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--text-primary)" }}>{a.name}</div>
+                  <div style={{ fontSize: "0.72rem", color: "var(--text-muted)", marginTop: "2px" }}>{a.desc}</div>
                 </button>
               );
             })}
@@ -307,11 +307,11 @@ export default function ToolsPage() {
         </div>
 
         {/* Approved Folders */}
-        <div className="glass-panel" style={{ padding: "24px" }}>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 700, marginBottom: "16px" }}>
+        <div className="glass-panel" style={{ padding: "20px" }}>
+          <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "16px" }}>
             Approved Folders
           </h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: "10px" }}>
             {folders.map((f, i) => (
               <button
                 key={i}
@@ -396,7 +396,7 @@ export default function ToolsPage() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "20px" }}>
+        <div className="grid-stack-mobile cols-1-2-0-8">
           {/* Quick Play Form */}
           <div className="glass-card" style={{ padding: "20px" }}>
             <h4 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--accent-cyan)", marginBottom: "12px" }}>
@@ -543,7 +543,7 @@ export default function ToolsPage() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "20px" }}>
+        <div className="grid-stack-mobile cols-1-2-0-8">
           {/* Quick Message Sender */}
           <div className="glass-card" style={{ padding: "20px" }}>
             <h4 style={{ fontSize: "0.95rem", fontWeight: 600, color: "var(--accent-cyan)", marginBottom: "12px" }}>

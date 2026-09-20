@@ -149,32 +149,32 @@ export default function StudyPage({ onPlayAudio }) {
   const completedCount = studyTasks.filter((t) => t.completed).length;
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
         <div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
             Study Mode & Pomodoro Focus
           </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
             Focused academic sprints, timed breaks, and subject task tracking.
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button onClick={() => handleStartBreak("short")} className="btn-secondary" style={{ padding: "8px 14px", fontSize: "0.82rem" }}>
-            <Coffee size={15} color="var(--accent-cyan)" /> 5m Short Break
+        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+          <button onClick={() => handleStartBreak("short")} className="btn-secondary" style={{ padding: "8px 12px", fontSize: "0.8rem" }}>
+            <Coffee size={14} color="var(--accent-cyan)" /> 5m Short Break
           </button>
-          <button onClick={() => handleStartBreak("long")} className="btn-secondary" style={{ padding: "8px 14px", fontSize: "0.82rem" }}>
-            <Coffee size={15} color="var(--accent-purple)" /> 15m Long Break
+          <button onClick={() => handleStartBreak("long")} className="btn-secondary" style={{ padding: "8px 12px", fontSize: "0.8rem" }}>
+            <Coffee size={14} color="var(--accent-purple)" /> 15m Long Break
           </button>
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: "24px" }}>
+      <div className="grid-stack-mobile cols-1-2-0-8">
         
         {/* Left Column: Timer & Controls */}
-        <div className="glass-panel" style={{ padding: "32px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className="glass-panel" style={{ padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center" }}>
           
           {/* Subject / Task Inputs when not active */}
           {!sessionActive ? (

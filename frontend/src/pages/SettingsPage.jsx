@@ -39,13 +39,13 @@ export default function SettingsPage() {
   };
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1000px", margin: "0 auto" }}>
+    <div className="page-container" style={{ maxWidth: "1000px" }}>
       {/* Header */}
-      <div style={{ marginBottom: "28px" }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
           Settings & Security Control
         </h2>
-        <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
           Manage user permissions, security guardrails, allowlists, and assistant configuration.
         </p>
       </div>
@@ -68,14 +68,14 @@ export default function SettingsPage() {
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         
         {/* Tool Permissions Guardrails */}
-        <div className="glass-panel" style={{ padding: "28px" }}>
+        <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "18px" }}>
             <ShieldCheck size={22} color="var(--accent-cyan)" />
             <div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Tool Permission Guardrails</h3>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 700 }}>Tool Permission Guardrails</h3>
               <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
                 Enable or disable specific desktop automation capabilities for your account.
               </p>
@@ -90,10 +90,12 @@ export default function SettingsPage() {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  padding: "14px 18px",
+                  padding: "14px 16px",
                   borderRadius: "10px",
                   background: "rgba(255, 255, 255, 0.03)",
-                  border: "1px solid rgba(255, 255, 255, 0.06)"
+                  border: "1px solid rgba(255, 255, 255, 0.06)",
+                  flexWrap: "wrap",
+                  gap: "10px"
                 }}
               >
                 <div>
@@ -128,18 +130,18 @@ export default function SettingsPage() {
         </div>
 
         {/* Security Allowlist Configuration */}
-        <div className="glass-panel" style={{ padding: "28px" }}>
+        <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "18px" }}>
             <Sliders size={22} color="var(--accent-purple)" />
             <div>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 700 }}>Security Allowlists</h3>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 700 }}>Security Allowlists</h3>
               <p style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
                 Applications and directories Sadie is authorized to interact with.
               </p>
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px" }}>
+          <div className="grid-stack-mobile cols-2">
             <div className="glass-card" style={{ padding: "16px" }}>
               <h4 style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--accent-cyan)", marginBottom: "10px" }}>
                 Allowed Applications

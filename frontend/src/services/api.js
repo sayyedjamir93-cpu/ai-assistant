@@ -3,7 +3,18 @@
  * Connects React UI components to FastAPI Backend endpoints.
  */
 
-const API_BASE = "http://127.0.0.1:8000/api";
+// Dynamically resolve API URL so mobile devices on the same Wi-Fi connect to backend seamlessly
+const getApiBase = () => {
+  if (import.meta.env.VITE_API_BASE) {
+    return import.meta.env.VITE_API_BASE;
+  }
+  if (typeof window !== "undefined" && window.location.hostname && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+    return `http://${window.location.hostname}:8000/api`;
+  }
+  return "http://127.0.0.1:8000/api";
+};
+
+const API_BASE = getApiBase();
 
 function getAuthHeaders() {
   const token = localStorage.getItem("sadie_token");

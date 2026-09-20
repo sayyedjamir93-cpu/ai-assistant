@@ -87,20 +87,20 @@ export default function NotesPage() {
   };
 
   return (
-    <div style={{ padding: "32px", maxWidth: "1200px", margin: "0 auto" }}>
+    <div className="page-container">
       {/* Header */}
-      <div style={{ marginBottom: "28px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ marginBottom: "24px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
         <div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700 }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.3rem, 3.5vw, 1.8rem)", fontWeight: 700 }}>
             Notes & Voice Dictation
           </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>
             Capture study concepts, algorithm notes, and dictate notes directly by voice.
           </p>
         </div>
 
         {/* Search Bar */}
-        <div style={{ position: "relative", width: "300px" }}>
+        <div style={{ position: "relative", width: "100%", maxWidth: "320px" }}>
           <Search size={16} color="var(--text-muted)" style={{ position: "absolute", left: "14px", top: "12px" }} />
           <input
             type="text"
@@ -113,11 +113,11 @@ export default function NotesPage() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "24px" }}>
+      <div className="grid-stack-mobile cols-1-2fr">
         
         {/* Create Note Card */}
-        <div className="glass-panel" style={{ padding: "24px", height: "fit-content" }}>
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 600, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
+        <div className="glass-panel" style={{ padding: "20px", height: "fit-content" }}>
+          <h3 style={{ fontSize: "1.05rem", fontWeight: 600, marginBottom: "16px", display: "flex", alignItems: "center", gap: "8px" }}>
             <Plus size={18} color="var(--accent-cyan)" /> New Note
           </h3>
 

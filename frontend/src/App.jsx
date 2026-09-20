@@ -1,4 +1,11 @@
 import React, { useState, useRef } from "react";
+import {
+  LayoutDashboard,
+  MessageSquare,
+  GraduationCap,
+  Wrench,
+  Menu
+} from "lucide-react";
 import { AuthProvider } from "./context/AuthContext";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -19,6 +26,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [activeMode, setActiveMode] = useState("normal"); // 'normal' | 'study' | 'coding'
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const currentAudioRef = useRef(null);
 
@@ -129,12 +137,14 @@ export default function App() {
   return (
     <AuthProvider>
       <div style={{ display: "flex", minHeight: "100vh", background: "var(--bg-dark)" }}>
-        {/* Persistent Navigation Sidebar */}
+        {/* Navigation Sidebar (Desktop sticky + Mobile slide-out drawer) */}
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           activeMode={activeMode}
           setActiveMode={setActiveMode}
+          isMobileOpen={isMobileDrawerOpen}
+          onCloseMobile={() => setIsMobileDrawerOpen(false)}
         />
 
         {/* Main Content View */}
@@ -145,12 +155,56 @@ export default function App() {
             soundEnabled={soundEnabled}
             onToggleSound={handleToggleSound}
             onStopAudio={handleStopAudio}
+            onOpenMobileMenu={() => setIsMobileDrawerOpen(true)}
           />
 
-          <main style={{ flex: 1, overflowY: "auto" }}>
+          <main className="mobile-content-wrapper" style={{ flex: 1, overflowY: "auto" }}>
             {renderActivePage()}
           </main>
         </div>
+
+        {/* Native-feeling Mobile Bottom Navigation Bar */}
+        <nav className="mobile-bottom-nav">
+          <button
+            onClick={() => setActiveTab("dashboard")}
+            className={`mobile-nav-item ${activeTab === "dashboard" ? "active" : ""}`}
+          >
+            <LayoutDashboard size={20} />
+            <span>Home</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("chat")}
+            className={`mobile-nav-item ${activeTab === "chat" ? "active" : ""}`}
+          >
+            <MessageSquare size={20} />
+            <span>Chat</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("study")}
+            className={`mobile-nav-item ${activeTab === "study" ? "active" : ""}`}
+          >
+            <GraduationCap size={20} />
+            <span>Study</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("tools")}
+            className={`mobile-nav-item ${activeTab === "tools" ? "active" : ""}`}
+          >
+            <Wrench size={20} />
+            <span>Tools</span>
+          </button>
+
+          <button
+            onClick={() => setIsMobileDrawerOpen(true)}
+            className="mobile-nav-item"
+          >
+            <Menu size={20} />
+            <span>More</span>
+          </button>
+        </nav>
 
         {/* Login / Registration Modal */}
         <AuthModal
@@ -161,3 +215,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

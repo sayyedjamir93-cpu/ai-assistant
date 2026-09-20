@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Send, Mic, Sparkles, Volume2, Bot, User, Trash2, Plus, Wrench, Play, Music, Tv, ExternalLink, Code2, Copy, Check, Terminal } from "lucide-react";
+import { Send, Mic, Sparkles, Volume2, Bot, User, Trash2, Plus, Wrench, Play, Music, Tv, ExternalLink, Code2, Copy, Check, Terminal, History, X } from "lucide-react";
 import { api } from "../services/api";
 
 export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onStopAudio, soundEnabled }) {
@@ -17,6 +17,7 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
   const [conversations, setConversations] = useState([]);
   const [currentConvId, setCurrentConvId] = useState(null);
   const [isListening, setIsListening] = useState(false);
+  const [showHistoryMobile, setShowHistoryMobile] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -124,20 +125,64 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
         created_at: new Date().toISOString()
       }
     ]);
+    setShowHistoryMobile(false);
   };
 
+  const handleSelectConv = async (cId) => {
+    setCurrentConvId(cId);
+    setShowHistoryMobile(false);
+    try {
+      const detail = await api.assistant.getConversation(cId);
+      setMessages(detail.messages || []);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const renderHistoryList = () => (
+    <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "6px" }}>
+      {conversations.map((c) => (
+        <button
+          key={c.id}
+          onClick={() => handleSelectConv(c.id)}
+          style={{
+            background: currentConvId === c.id ? "rgba(0, 229, 255, 0.15)" : "transparent",
+            border: `1px solid ${currentConvId === c.id ? "rgba(0, 229, 255, 0.3)" : "transparent"}`,
+            color: currentConvId === c.id ? "var(--accent-cyan)" : "var(--text-secondary)",
+            padding: "8px 10px",
+            borderRadius: "6px",
+            textAlign: "left",
+            fontSize: "0.82rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+            transition: "all 0.2s"
+          }}
+        >
+          <Bot size={14} style={{ flexShrink: 0 }} />
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {c.title}
+          </span>
+        </button>
+      ))}
+    </div>
+  );
+
   return (
-    <div style={{ display: "flex", height: "calc(100vh - 64px)", overflow: "hidden" }}>
-      {/* Conversations History Sidebar */}
-      <div style={{
-        width: "240px",
-        minWidth: "240px",
-        background: "rgba(10, 15, 26, 0.7)",
-        borderRight: "1px solid rgba(255, 255, 255, 0.06)",
-        padding: "16px 12px",
-        display: "flex",
-        flexDirection: "column"
-      }}>
+    <div style={{ display: "flex", height: "calc(100vh - 60px)", overflow: "hidden" }}>
+      {/* Desktop Conversations History Sidebar */}
+      <div
+        className="desktop-only"
+        style={{
+          width: "240px",
+          minWidth: "240px",
+          background: "rgba(10, 15, 26, 0.7)",
+          borderRight: "1px solid rgba(255, 255, 255, 0.06)",
+          padding: "16px 12px",
+          flexDirection: "column"
+        }}
+      >
         <button
           onClick={startNewChat}
           className="btn-primary"
@@ -150,47 +195,72 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
           Recent Conversations
         </div>
 
-        <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "6px" }}>
-          {conversations.map((c) => (
-            <button
-              key={c.id}
-              onClick={async () => {
-                setCurrentConvId(c.id);
-                try {
-                  const detail = await api.assistant.getConversation(c.id);
-                  setMessages(detail.messages || []);
-                } catch (e) {
-                  console.error(e);
-                }
-              }}
-              style={{
-                background: currentConvId === c.id ? "rgba(0, 229, 255, 0.15)" : "transparent",
-                border: `1px solid ${currentConvId === c.id ? "rgba(0, 229, 255, 0.3)" : "transparent"}`,
-                color: currentConvId === c.id ? "var(--accent-cyan)" : "var(--text-secondary)",
-                padding: "8px 10px",
-                borderRadius: "6px",
-                textAlign: "left",
-                fontSize: "0.82rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                cursor: "pointer",
-                transition: "all 0.2s"
-              }}
-            >
-              <Bot size={14} />
-              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {c.title}
-              </span>
-            </button>
-          ))}
-        </div>
+        {renderHistoryList()}
       </div>
 
+      {/* Mobile Conversations Drawer */}
+      {showHistoryMobile && (
+        <>
+          <div className="mobile-drawer-backdrop" onClick={() => setShowHistoryMobile(false)} />
+          <div className="mobile-drawer-content" style={{ width: "280px", padding: "16px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "14px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <History size={18} color="var(--accent-cyan)" />
+                <h3 style={{ fontSize: "1rem", fontWeight: 700, margin: 0 }}>Conversations</h3>
+              </div>
+              <button
+                onClick={() => setShowHistoryMobile(false)}
+                style={{ background: "transparent", border: "none", color: "var(--text-muted)", cursor: "pointer" }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <button
+              onClick={startNewChat}
+              className="btn-primary"
+              style={{ width: "100%", padding: "10px", fontSize: "0.85rem", marginBottom: "14px" }}
+            >
+              <Plus size={16} /> New Chat
+            </button>
+
+            {renderHistoryList()}
+          </div>
+        </>
+      )}
+
       {/* Main Chat Area */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "transparent" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", background: "transparent", minWidth: 0 }}>
+        {/* Mobile Top Chat Bar */}
+        <div className="mobile-only" style={{
+          padding: "8px 12px",
+          background: "rgba(10, 15, 26, 0.85)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "8px"
+        }}>
+          <button
+            onClick={() => setShowHistoryMobile(true)}
+            className="btn-secondary"
+            style={{ padding: "6px 10px", fontSize: "0.78rem", gap: "6px" }}
+          >
+            <History size={14} color="var(--accent-cyan)" />
+            <span>History ({conversations.length})</span>
+          </button>
+
+          <button
+            onClick={startNewChat}
+            className="btn-primary"
+            style={{ padding: "6px 12px", fontSize: "0.78rem", gap: "4px" }}
+          >
+            <Plus size={14} />
+            <span>New Chat</span>
+          </button>
+        </div>
+
         {/* Messages Stream */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "24px 32px", display: "flex", flexDirection: "column", gap: "18px" }}>
+        <div style={{ flex: 1, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: "14px" }}>
           {messages.map((msg) => {
             const isUser = msg.sender === "user";
             return (
@@ -198,9 +268,9 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
                 key={msg.id}
                 style={{
                   display: "flex",
-                  gap: "12px",
+                  gap: "10px",
                   alignSelf: isUser ? "flex-end" : "flex-start",
-                  maxWidth: "80%"
+                  maxWidth: isUser ? "88%" : "95%"
                 }}
               >
                 {!isUser && (
@@ -460,18 +530,18 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
 
         {/* Input Bar */}
         <div style={{
-          padding: "16px 24px",
-          background: "rgba(10, 14, 24, 0.9)",
+          padding: "12px 16px",
+          background: "rgba(10, 14, 24, 0.95)",
           borderTop: "1px solid rgba(255, 255, 255, 0.08)"
         }}>
-          <form onSubmit={handleSendMessage} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <form onSubmit={handleSendMessage} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <button
               type="button"
               onClick={handleMicInput}
               title="Speak to Sadie"
               style={{
-                width: "44px",
-                height: "44px",
+                width: "42px",
+                height: "42px",
                 borderRadius: "10px",
                 background: isListening ? "rgba(255, 42, 109, 0.2)" : "rgba(255, 255, 255, 0.06)",
                 border: `1px solid ${isListening ? "var(--accent-rose)" : "rgba(255, 255, 255, 0.1)"}`,
@@ -479,28 +549,29 @@ export default function ChatPage({ activeMode, setActiveMode, onPlayAudio, onSto
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                cursor: "pointer"
+                cursor: "pointer",
+                flexShrink: 0
               }}
             >
-              <Mic size={20} />
+              <Mic size={19} />
             </button>
 
             <input
               type="text"
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
-              placeholder="Ask Sadie a question or give a command (e.g. 'Explain recursion', 'Open calc', 'Start 25m timer')..."
+              placeholder="Ask Sadie a question or command..."
               className="input-glass"
-              style={{ flex: 1, padding: "12px 18px", borderRadius: "10px" }}
+              style={{ flex: 1, padding: "10px 14px", borderRadius: "10px", minWidth: 0, fontSize: "0.9rem" }}
             />
 
             <button
               type="submit"
               disabled={loading || !inputText.trim()}
               className="btn-primary"
-              style={{ height: "44px", padding: "0 22px", borderRadius: "10px" }}
+              style={{ height: "42px", padding: "0 16px", borderRadius: "10px", flexShrink: 0 }}
             >
-              <Send size={18} />
+              <Send size={17} />
             </button>
           </form>
         </div>
